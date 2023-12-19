@@ -1,6 +1,6 @@
 function Dashboard() {
     return (
-        <div>Dashboard</div>
+        <h1 className="text-5xl">Dashboard</h1>
     )
 }
 export default Dashboard

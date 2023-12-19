@@ -1,6 +1,9 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { login, reset } from '../features/auth/authSlice'
+
 
 
 
@@ -14,7 +17,23 @@ function Login() {
 
     const { email, password } = formData
 
+    const dispatch = useDispatch()
     const navigate = useNavigate()
+    // Initialize the useSelector hook to get the state from the store
+    const { user, isSuccess, isError, message } = useSelector(state => state.auth)
+
+    useEffect(() => {
+        if (isError) {
+            setFormData({
+                email: '',
+                password: '',
+            })
+        }
+        if (isSuccess || user) {
+            navigate('/dashboard')
+        }
+    }, [isSuccess, isError, user, message, dispatch, navigate])
+
 
     const onChange = (e) => {
         e.preventDefault()
@@ -26,8 +45,12 @@ function Login() {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(formData)
-        navigate('/dashboard')
+
+        const userData = {
+            email,
+            password
+        }
+        dispatch(login(userData))
     }
 
     return (
@@ -67,7 +90,7 @@ function Login() {
                     <div className='text-center'>
                         <button className="btn btn-outline mt-12" >Submit</button>
                     </div>
-                    <Link to='/register' className='mt-10'>Not a member? Click Here to register</Link>
+                    <Link to='/' className='mt-10'>Not a member? Click Here to register</Link>
                 </form>
             </section>
         </>
