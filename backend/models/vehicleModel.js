@@ -34,12 +34,11 @@ const vehicleSchema = mongoose.Schema(
         },
         color: {
             type: String,
-            required: [true, 'Please enter the color'],
         },
         engine: {
             type: String,
             required: [true, 'Please enter the engine'],
-            enum: ['i4', 'v6', 'v8', 'v10', 'electric motors'],
+            enum: ['i4', 'v6', 'v8', 'v10', 'electric motors', 'other'],
         },
         fuel: {
             type: String,
@@ -59,7 +58,6 @@ const vehicleSchema = mongoose.Schema(
         },
         milesOrHours: {
             type: String,
-            required: [true, 'Please select from the following:'],
             enum: ['miles', 'hours'],
         },
         mileage: {
@@ -74,6 +72,7 @@ const vehicleSchema = mongoose.Schema(
         },
         vinSerialNumber: {
             type: String,
+
         },
         licensePlate: {
             type: String,
