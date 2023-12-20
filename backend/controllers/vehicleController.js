@@ -3,8 +3,6 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const Vehicle = require('../models/vehicleModel');
 
-
-
 // @desc    Get user Vehicles
 // @route   GET /api/vehicles
 // @access  Private
@@ -56,7 +54,7 @@ const createVehicle = asyncHandler(async (req, res) => {
     //destructure the request body, get the product and description from the body(user input)
     const { type, make, model, year, trim, color, engine, fuel, transmission, transmissionSpeeds, driveType, milesOrHours, mileage, hours, vinSerial, vinSerialNumber, licensePlate } = req.body
     // If the product or description is not provided, throw an error
-    if (!type || !make || !model || !year || !engine || !fuel || !transmission || !milesOrHours) {
+    if (!make || !model || !year || !engine || !fuel || !transmission || !milesOrHours) {
         res.status(400)
         throw new Error('Please fill all required fields')
     }
@@ -72,7 +70,6 @@ const createVehicle = asyncHandler(async (req, res) => {
     // Create the vehicle
     const vehicle = await Vehicle.create({
         user: req.user.id,
-        type,
         make,
         model,
         year,
