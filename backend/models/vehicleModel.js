@@ -15,7 +15,7 @@ const vehicleSchema = mongoose.Schema(
             type: String,
             required: [true, 'Please select from the following:'],
             // Add an enum validator to make sure the product is one of the following
-            enum: ['auto', 'motorcycle', 'boat', 'rv', 'tractor', 'other'],
+            enum: ['auto', 'motorcycle', 'rv', 'boat', 'aircraft', 'tractor', 'heavy equipment', 'other'],
         },
         make: {
             type: String,
@@ -38,12 +38,25 @@ const vehicleSchema = mongoose.Schema(
         },
         engine: {
             type: String,
+            required: [true, 'Please enter the engine'],
+            enum: ['i4', 'v6', 'v8', 'v10', 'electric motors'],
+        },
+        fuel: {
+            type: String,
+            required: [true, 'Please select from the following:'],
+            enum: ['gas', 'diesel', 'hybrid', 'electric'],
         },
         transmission: {
             type: String,
             enum: ['automatic', 'manual', 'n/a', 'other'],
         },
-
+        transmissionSpeeds: {
+            type: Number,
+        },
+        driveType: {
+            type: String,
+            enum: ['4x4', '4x2', 'awd', 'fwd', 'rwd'],
+        },
         milesOrHours: {
             type: String,
             required: [true, 'Please select from the following:'],
