@@ -63,9 +63,6 @@ const vehicleSchema = mongoose.Schema(
         mileage: {
             type: Number,
         },
-        hours: {
-            type: Number,
-        },
         vinSerial: {
             type: String,
             enum: ['VIN', 'Serial'],

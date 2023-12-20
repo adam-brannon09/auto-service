@@ -1,7 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { createVehicle, reset } from '../features/vehicles/vehicleSlice'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import Spinner from '../components/Spinner'
 
 function AddVehicle() {
+    const { user } = useSelector((state) => state.auth)
+    const { isLoading, isSuccess, isError, message } = useSelector(state => state.vehicles)
     const [formData, setFormData] = useState({
         make: '',
         model: '',
@@ -19,12 +26,61 @@ function AddVehicle() {
         vinSerialNumber: '',
         licensePlate: '',
     })
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
+    useEffect(() => {
+        // if there is an error, show error message
+        if (isError) {
+            toast.error(message)
+        }
+        // if there is success, show success message and navigate to tickets page
+        if (isSuccess) {
+            toast.success("Vehicle created successfully")
+            navigate('/vehicles')
+        }
+        // reset state
+        dispatch(reset())
+        //add dependencies to useEffect
+    }, [isError, isSuccess, message, dispatch, navigate])
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        // dispatch the add vehicle action
+        dispatch(createVehicle({ ...formData }))
+        console.log(formData)
+    }
+    const onClick = (e) => {
+        e.preventDefault()
+        setFormData({
+            make: '',
+            model: '',
+            trim: '',
+            year: '',
+            color: '',
+            engine: '',
+            fuel: '',
+            transmission: '',
+            transmissionSpeeds: '',
+            driveType: '',
+            milesOrHours: '',
+            mileage: '',
+            vinSerial: '',
+            vinSerialNumber: '',
+            licensePlate: '',
+        })
+    }
+
+
+
+    if (isLoading) {
+        return <Spinner />
+    }
 
     return (
         <div>
             <h1 className="text-3xl font-semibold">Add A Vehicle</h1>
-            <div className="flex flex-wrap justify-around mt-16">
+            <form className="flex flex-wrap justify-around mt-16" onSubmit={onSubmit}>
                 {/* first column */}
                 <section className="form-control w-96">
                     <div className="join join-vertical">
@@ -40,7 +96,10 @@ function AddVehicle() {
                                 id="make"
                                 name="make"
                                 value={formData.make}
-                                className="input input-bordered w-full max-w-xs" />
+                                className="input input-bordered w-full max-w-xs"
+                                onChange={(e) => setFormData({ ...formData, make: e.target.value })}
+
+                            />
                         </label>
                         {/* model input */}
                         <label className="form-control w-full max-w-xs">
@@ -54,7 +113,10 @@ function AddVehicle() {
                                 id="model"
                                 name="model"
                                 value={formData.model}
-                                className="input input-bordered w-full max-w-xs" />
+                                className="input input-bordered w-full max-w-xs"
+                                onChange={(e) => setFormData({ ...formData, model: e.target.value })}
+                            />
+
                         </label>
 
                         {/* year input */}
@@ -69,7 +131,9 @@ function AddVehicle() {
                                 id="year"
                                 name="year"
                                 value={formData.year}
-                                className="input input-bordered w-full max-w-xs" />
+                                className="input input-bordered w-full max-w-xs"
+                                onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                            />
                         </label>
                         {/* trim input */}
                         <label className="form-control w-full max-w-xs">
@@ -82,7 +146,9 @@ function AddVehicle() {
                                 id="trim"
                                 name="trim"
                                 value={formData.trim}
-                                className="input input-bordered w-full max-w-xs" />
+                                className="input input-bordered w-full max-w-xs"
+                                onChange={(e) => setFormData({ ...formData, trim: e.target.value })}
+                            />
                         </label>
 
                         {/* color input */}
@@ -96,7 +162,9 @@ function AddVehicle() {
                                 id="color"
                                 name="color"
                                 value={formData.color}
-                                className="input input-bordered w-full max-w-xs" />
+                                className="input input-bordered w-full max-w-xs"
+                                onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+                            />
                         </label>
                         {/* select component for engine*/}
                         <label className="form-control w-full max-w-xs">
@@ -108,8 +176,10 @@ function AddVehicle() {
                                 id="engine"
                                 name="engine"
                                 value={formData.engine}
-                                className="select select-bordered">
-                                <option disabled selected>Select One</option>
+                                className="select select-bordered"
+                                onChange={(e) => setFormData({ ...formData, engine: e.target.value })}
+                            >
+                                <option value="">Select One</option>
                                 <option value="I4">I4</option>
                                 <option value="V6">V6</option>
                                 <option value="V8">V8</option>
@@ -135,8 +205,9 @@ function AddVehicle() {
                                 id="fuel"
                                 name="fuel"
                                 value={formData.fuel}
-                                className="select select-bordered">
-                                <option disabled selected>Select One</option>
+                                className="select select-bordered"
+                                onChange={(e) => setFormData({ ...formData, fuel: e.target.value })}>
+                                <option value="" >Select One</option>
                                 <option value="Gas">Gas</option>
                                 <option value="Diesel">Diesel</option>
                                 <option value="Hybrid">Hybrid</option>
@@ -153,8 +224,10 @@ function AddVehicle() {
                                 id="transmission"
                                 name="transmission"
                                 value={formData.transmission}
-                                className="select select-bordered">
-                                <option disabled selected>Select One</option>
+                                className="select select-bordered"
+                                onChange={(e) => setFormData({ ...formData, transmission: e.target.value })}
+                            >
+                                <option value="">Select One</option>
                                 <option value="Automatic">Automatic</option>
                                 <option value="Manual">Manual</option>
                                 <option value="Other">Other</option>
@@ -172,7 +245,8 @@ function AddVehicle() {
                                 id="transmissionSpeeds"
                                 name="transmissionSpeeds"
                                 value={formData.transmissionSpeeds}
-                                className="input input-bordered w-full max-w-xs" />
+                                className="input input-bordered w-full max-w-xs"
+                                onChange={(e) => setFormData({ ...formData, transmissionSpeeds: e.target.value })} />
                         </label>
 
                         {/* select component for drive type*/}
@@ -184,8 +258,10 @@ function AddVehicle() {
                                 id="driveType"
                                 name="driveType"
                                 value={formData.driveType}
-                                className="select select-bordered">
-                                <option disabled selected>Select One</option>
+                                className="select select-bordered"
+                                onChange={(e) => setFormData({ ...formData, driveType: e.target.value })}
+                            >
+                                <option value="">Select One</option>
                                 <option value="4x4">4x4</option>
                                 <option value="4x2">4x2</option>
                                 <option value="AWD">AWD</option>
@@ -204,8 +280,9 @@ function AddVehicle() {
                                 id="milesOrHours"
                                 name="milesOrHours"
                                 value={formData.milesOrHours}
-                                className="select select-bordered">
-                                <option disabled selected>Select One</option>
+                                className="select select-bordered"
+                                onChange={(e) => setFormData({ ...formData, milesOrHours: e.target.value })}>
+                                <option value="">Select One</option>
                                 <option value="Miles">Miles</option>
                                 <option value="Hours">Hours</option>
                             </select>
@@ -222,7 +299,8 @@ function AddVehicle() {
                                 id="mileage"
                                 name="mileage"
                                 value={formData.mileage}
-                                className="input input-bordered w-full max-w-xs" />
+                                className="input input-bordered w-full max-w-xs"
+                                onChange={(e) => setFormData({ ...formData, mileage: e.target.value })} />
                         </label>
 
                     </div>
@@ -240,8 +318,9 @@ function AddVehicle() {
                                 id="vinSerial"
                                 name="vinSerial"
                                 value={formData.vinSerial}
-                                className="select select-bordered">
-                                <option disabled selected>Select One</option>
+                                className="select select-bordered"
+                                onChange={(e) => setFormData({ ...formData, vinSerial: e.target.value })}>
+                                <option value="">Select One</option>
                                 <option value="VIN">VIN</option>
                                 <option value="Serial">Serial Number</option>
                             </select>
@@ -258,7 +337,8 @@ function AddVehicle() {
                                 id="vinSerialNumber"
                                 name="vinSerialNumber"
                                 value={formData.vinSerialNumber}
-                                className="input input-bordered w-full max-w-xs" />
+                                className="input input-bordered w-full max-w-xs"
+                                onChange={(e) => setFormData({ ...formData, vinSerialNumber: e.target.value })} />
                         </label>
 
                         {/* license plate input */}
@@ -272,17 +352,18 @@ function AddVehicle() {
                                 id="licensePlate"
                                 name="licensePlate"
                                 value={formData.licensePlate}
-                                className="input input-bordered w-full max-w-xs" />
+                                className="input input-bordered w-full max-w-xs"
+                                onChange={(e) => setFormData({ ...formData, licensePlate: e.target.value })} />
                         </label>
                         {/* submit button */}
                         <div >
-                            <button className="btn btn-primary btn-wide mt-24 text-xl">Add Vehicle</button>
-                            <button className="btn btn-primary btn-wide mt-2 text-xl">Clear All Fields</button>
+                            <button type='submit' className="btn btn-primary btn-wide mt-24 text-xl">Add Vehicle</button>
+                            <button className="btn btn-primary btn-wide mt-2 text-xl" onClick={onClick}>Clear All Fields</button>
                             <Link to='/dashboard' className="btn btn-primary btn-wide mt-2 text-xl">Return to Dashboard</Link>
                         </div>
                     </div>
                 </section>
-            </div>
+            </form>
         </div>
     )
 }
