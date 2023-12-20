@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
+import { CiLogout } from "react-icons/ci";
+import { FaWrench } from "react-icons/fa";
 
 
 function Header() {
@@ -34,7 +36,7 @@ function Header() {
                         {/* <li><a>Item 3</a></li> */}
                     </ul>
                 </div>
-                <Link to='/' className="btn btn-ghost text-xl">Auto Service Log</Link>
+                <Link to='/' className="btn btn-ghost text-xl"><FaWrench /> Auto Service Log</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -53,7 +55,7 @@ function Header() {
             </div>
             <div className="navbar-end">
                 {user ? (
-                    <button className='btn' onClick={onLogout}>Logout</button>
+                    <button className='btn text-xl' onClick={onLogout}><CiLogout /> Logout</button>
                 ) : <></>}
 
 

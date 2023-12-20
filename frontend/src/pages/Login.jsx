@@ -1,14 +1,9 @@
-
+// Desc: Login page for the user to login to the application
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../features/auth/authSlice'
 import { toast } from 'react-toastify'
-
-
-
-
-
 
 function Login() {
     const [formData, setFormData] = useState({
@@ -32,7 +27,7 @@ function Login() {
             toast.error(message)
         }
         if (isSuccess || user) {
-            navigate('/')
+            navigate('/dashboard')
         }
 
     }, [isError, isSuccess, user, message, navigate])
@@ -61,7 +56,7 @@ function Login() {
             <section className='mt-24'>
                 <h1 className='text-3xl'>Sign In</h1>
                 <br />
-                <p className='text-2xl'>Please Sign In</p>
+                <p className='text-2xl'>Please Sign In To View Your Dashboard</p>
             </section>
             <section className="flex flex-row justify-center form-group mt-20">
                 <form className="flex flex-col content-center" onSubmit={onSubmit}>

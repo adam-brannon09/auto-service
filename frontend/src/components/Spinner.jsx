@@ -1,3 +1,5 @@
+// Desc: Spinner component for loading state
+
 function Spinner() {
     return (
         <div className="loadingSpinnerContainer">
