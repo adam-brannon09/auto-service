@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, reset } from '../features/auth/authSlice'
+import { login } from '../features/auth/authSlice'
+import { toast } from 'react-toastify'
 
 
 
@@ -28,11 +29,13 @@ function Login() {
                 email: '',
                 password: '',
             })
+            toast.error(message)
         }
         if (isSuccess || user) {
-            navigate('/dashboard')
+            navigate('/')
         }
-    }, [isSuccess, isError, user, message, dispatch, navigate])
+
+    }, [isError, isSuccess, user, message, navigate])
 
 
     const onChange = (e) => {
