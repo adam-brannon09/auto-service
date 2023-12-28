@@ -11,12 +11,7 @@ const vehicleSchema = mongoose.Schema(
             // Reference the User model with the ref keyword. This will allow access to that user's information from the vehicle model
             ref: 'User',
         },
-        // type: {
-        //     type: String,
-        //     required: [true, 'Please select from the following:'],
-        //     // Add an enum validator to make sure the product is one of the following
-        //     enum: ['auto', 'motorcycle', 'rv', 'boat', 'aircraft', 'tractor', 'heavy equipment', 'other'],
-        // },
+
         make: {
             type: String,
             required: [true, 'Please enter the make'],

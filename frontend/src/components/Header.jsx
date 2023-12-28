@@ -55,7 +55,9 @@ function Header() {
             </div>
             <div className="navbar-end">
                 {user ? (
-                    <button className='btn text-xl' onClick={onLogout}><CiLogout /> Logout</button>
+                    <>
+                        <button className='btn text-xl' onClick={onLogout}><CiLogout /> Logout</button>
+                    </>
                 ) : <></>}
 
 

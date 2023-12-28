@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { createVehicle, reset } from '../features/vehicles/vehicleSlice'
+import { uploadImage } from '../features/images/imageSlice'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
 
 function AddVehicle() {
-    const { user } = useSelector((state) => state.auth)
     const { isLoading, isSuccess, isError, message } = useSelector(state => state.vehicles)
     const [formData, setFormData] = useState({
         make: '',
@@ -26,6 +26,7 @@ function AddVehicle() {
         vinSerialNumber: '',
         licensePlate: '',
     })
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -44,10 +45,17 @@ function AddVehicle() {
         //add dependencies to useEffect
     }, [isError, isSuccess, message, dispatch, navigate])
 
+
+
+
     const onSubmit = (e) => {
         e.preventDefault()
         // dispatch the add vehicle action
         dispatch(createVehicle({ ...formData }))
+        // dispatch the upload image action
+        // Use FormData to handle file uploads
+
+        // Dispatch the uploadImage action with the FormData containing image files
         console.log(formData)
     }
     const onClick = (e) => {
@@ -70,6 +78,7 @@ function AddVehicle() {
             licensePlate: '',
         })
     }
+
 
 
 
@@ -355,8 +364,25 @@ function AddVehicle() {
                                 className="input input-bordered w-full max-w-xs"
                                 onChange={(e) => setFormData({ ...formData, licensePlate: e.target.value })} />
                         </label>
+                        {/* upload pictures */}
+                        {/* <label className="form-control w-full max-w-xs">
+                            <div className="label mt-2">
+                                <span className="label-text">Upload Images</span>
+                            </div>
+                            <input
+                                id='images'
+                                name='images'
+                                // onChange={(e) => setImageData(e.target.files)} // Use e.target.files to get the file array
+                                max='10'
+                                accept='.jpg,.png,.jpeg'
+                                multiple
+                                type="file"
+                                className="file-input file-input-bordered w-full max-w-xs" />
+                        </label> */}
+
                         {/* submit button */}
                         <div >
+
                             <button type='submit' className="btn btn-primary btn-wide mt-24 text-xl">Add Vehicle</button>
                             <button className="btn btn-primary btn-wide mt-2 text-xl" onClick={onClick}>Clear All Fields</button>
                             <Link to='/dashboard' className="btn btn-primary btn-wide mt-2 text-xl">Return to Dashboard</Link>

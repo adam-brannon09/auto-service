@@ -1,6 +1,6 @@
 function Records() {
     return (
-        <div>Records</div>
+        <div>{vehicle.make}</div>
     )
 }
 export default Records

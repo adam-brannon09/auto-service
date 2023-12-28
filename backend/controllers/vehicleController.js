@@ -52,7 +52,7 @@ const getVehicle = asyncHandler(async (req, res) => {
 // @access  Private
 const createVehicle = asyncHandler(async (req, res) => {
     //destructure the request body, get the product and description from the body(user input)
-    const { make, model, year, trim, color, engine, fuel, transmission, transmissionSpeeds, driveType, milesOrHours, mileage, vinSerial, vinSerialNumber, licensePlate } = req.body
+    const { make, model, year, trim, color, engine, fuel, transmission, transmissionSpeeds, driveType, milesOrHours, mileage, vinSerial, vinSerialNumber, licensePlate, images } = req.body
     // If the product or description is not provided, throw an error
     if (!make || !model || !year || !engine || !fuel) {
         res.status(400)
@@ -84,7 +84,7 @@ const createVehicle = asyncHandler(async (req, res) => {
         mileage,
         vinSerial,
         vinSerialNumber,
-        licensePlate
+        licensePlate,
     })
 
     res.status(200).json(vehicle)

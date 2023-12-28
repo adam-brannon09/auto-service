@@ -38,8 +38,8 @@ function App() {
             <Route path='/addrecord' element={<PrivateRoute />}>
               <Route path='/addrecord' element={<AddRecord />} />
             </Route>
-            <Route path='/records' element={<PrivateRoute />}>
-              <Route path='/records' element={<Records />} />
+            <Route path='/records/:id' element={<PrivateRoute />}>
+              <Route path='/records/:id' element={<Records />} />
             </Route>
           </Routes>
         </div>

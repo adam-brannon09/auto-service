@@ -6,6 +6,7 @@ const API_URL = '/api/vehicles/';
 
 // Create new vehicle
 const createVehicle = async (vehicleData, token) => {
+
     //set the headers for the request
     //the token has to be passed in the headers for the backend to verify the user is logged in and authorized to create a vehicle
     const config = {

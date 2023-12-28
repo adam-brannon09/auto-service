@@ -6,6 +6,7 @@ const initialState = {
     vehicles: [],
     //vehicle object for when theres only one vehicle
     vehicle: {},
+    images: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -80,6 +81,9 @@ export const vehicleSlice = createSlice({
     reducers: {
         // reset state after register
         reset: (state) => initialState
+
+
+
     },
     extraReducers: (builder) => {
         builder
@@ -145,6 +149,6 @@ export const vehicleSlice = createSlice({
 
 });
 //export the action reducers
-export const { reset } = vehicleSlice.actions;
+export const { reset, addImage, setImages, removeImage } = vehicleSlice.actions;
 //export the reducer
 export default vehicleSlice.reducer;
